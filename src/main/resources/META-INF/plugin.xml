@@ -1,0 +1,65 @@
+<!-- Plugin Configuration File. Read more: https://plugins.jetbrains.com/docs/intellij/plugin-configuration-file.html -->
+<idea-plugin>
+    <!-- Unique identifier of the plugin. It should be FQN. It cannot be changed between the plugin versions. -->
+    <id>com.longqinx.x-dev-tool</id>
+
+    <!-- Public plugin name should be written in Title Case.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-name -->
+    <name>X-Dev-Tool</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor email="longqinxiao@qq.com" url="https://github.com">longqinx</vendor>
+
+    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
+         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
+         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
+    <description>A toolbox for development. It can be used to upload/download file to/from server over SSH, do Java
+        class hot swap with Arthas and so on...
+    </description>
+
+    <!-- Product and plugin compatibility requirements.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lang</depends>
+    <depends>com.intellij.modules.java</depends>
+
+    <!-- Extension points defined by the plugin.
+         Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
+    <extensions defaultExtensionNs="com.intellij">
+
+        <codeInsight.lineMarkerProvider language="JAVA"
+                                        implementationClass="com.longqinx.xdevtool.action.CompiledResultLineMarkerProvider"/>
+
+        <toolWindow factoryClass="com.longqinx.xdevtool.action.ConfigToolWindowFactory"
+                    id="X-Dev-Tool Configuration" anchor="right" secondary="true"/>
+    </extensions>
+    <actions>
+        <action id="com.longqinx.xdevtool.action.HotSwapAction" class="com.longqinx.xdevtool.action.HotSwapAction"
+                text="Hot Swap" description="Do hot swap action">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+
+
+        <group id="com.longqinx.xdevtool.action.CustomToolGroup" class="com.longqinx.xdevtool.action.CustomToolGroup"
+               text="Other Tools" compact="true" popup="true">
+
+            <action id="com.longqinx.xdevtool.action.filetrans.FileUploadAction"
+                    class="com.longqinx.xdevtool.action.filetrans.FileUploadAction"
+                    text="Upload to Server"
+                    description="Upload file to specified server">
+            </action>
+            <action id="com.longqinx.xdevtool.action.filetrans.FileDownloadAction"
+                    class="com.longqinx.xdevtool.action.filetrans.FileDownloadAction"
+                    text="Retrieval from Server"
+                    description="Retrieval a file from specified server">
+            </action>
+
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+        </group>
+
+        <!--            <action id="action.com.longqinx.xdevtool.TestAction" class="action.com.longqinx.xdevtool.TestAction"-->
+        <!--                    text="TestAction">-->
+        <!--            </action>-->
+
+    </actions>
+</idea-plugin>
